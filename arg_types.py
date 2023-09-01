@@ -4,10 +4,13 @@ def _arg_types(f):
         sig = inspect.signature(f)
         print(sig)
         pos_args = [name for name, p in sig.parameters.items()
-                    if p.kind == inspect.Parameter.POSITIONAL_OR_KEYWORD]
+                    if p.kind == inspect.Parameter.POSITIONAL_ONLY]
+        pos_or_kw_args = [name for name, p in sig.parameters.items()
+                                      if p.kind == inspect.Parameter.POSITIONAL_OR_KEYWORD]
         keyword_args = [name for name, p in sig.parameters.items()
                     if p.kind == inspect.Parameter.KEYWORD_ONLY]
-        print("positional or keyword:", pos_args)
+        print("positional only:", pos_args)
+        print("positional or keyword:", pos_or_kw_args)
         print("keyword only:", keyword_args)
         def func_wrapper(*args, **kwargs):
             return f(*args, **kwargs)
