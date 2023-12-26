@@ -8,6 +8,8 @@ def test_tree():
     t.insert(2)
     t.insert(1)
     t.insert(3)
+    t.insert(3) # trying to add an existing key does not add anything
+    t.insert(1)
 
     assert t.root.key == 2
     assert t.root.left.key == 1

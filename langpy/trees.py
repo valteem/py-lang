@@ -2,8 +2,6 @@
 Somewhat naive implemetation of tree data structure
 """
 
-from typing import Any
-
 class Tree:
 
     class Node:
@@ -19,9 +17,9 @@ class Tree:
     def insert(self, key) -> None:
         """
         We perform **insert** operation on keys, creating new nodes as convenient
-        --------
-        TODO (?): check whether key to insert is already in the tree
         """
+        if self.search(self.root, key) != None:
+            return # nothing to add if the key already exists
         n = Tree.Node(key)
         parent_node = None
         current_node = self.root # start looking for appropriate place to insert new node from root node
