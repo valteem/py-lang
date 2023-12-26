@@ -2,6 +2,8 @@
 Somewhat naive implemetation of tree data structure
 """
 
+from typing import Any
+
 class Tree:
 
     class Node:
@@ -36,3 +38,14 @@ class Tree:
             parent_node.left = n
         else:
             parent_node.right = n
+
+    
+    def search(self, node, key) -> ['Tree.Node', None]:
+
+        if node == None or key == node.key:
+            return node
+        else:
+            if key < node.key:
+                return self.search(node.left, key) # https://stackoverflow.com/questions/36488439/python-not-defined-recursive-function
+            else:
+                return self.search(node.right, key)
