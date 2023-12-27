@@ -132,20 +132,30 @@ def test_min_max():
     t.insert(14)
 
     assert t.maximum(t.root).key == 19
+    assert t.maximum_recursive(t.root).key == 19
     assert t.minimum(t.root).key == 2
+    assert t.minimum_recursive(t.root).key == 2
 
     n = t.root.left
     assert t.maximum(n).key == 9
+    assert t.maximum_recursive(n).key == 9
     assert t.minimum(n).key == 2
+    assert t.minimum_recursive(n).key == 2
 
     n = t.root.left.left
     assert t.maximum(n).key == 2
+    assert t.maximum_recursive(n).key == 2
     assert t.minimum(n).key == 2
+    assert t.minimum_recursive(n).key == 2
 
     n = t.root.left.right
     assert t.maximum(n).key == 9
+    assert t.maximum_recursive(n).key == 9
     assert t.minimum(n).key == 8
+    assert t.minimum_recursive(n).key == 8
 
     n = t.root.right
     assert t.maximum(n).key == 19
+    assert t.maximum_recursive(n).key == 19
     assert t.minimum(n).key == 14
+    assert t.minimum_recursive(n).key == 14

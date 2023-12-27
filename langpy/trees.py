@@ -91,3 +91,15 @@ class Tree:
         while current_node.right != None:
             current_node = current_node.right
         return current_node
+    
+    def minimum_recursive(self, node: Node) -> Node:
+        if node.left == None:
+            return node
+        else:
+            return self.minimum_recursive(node.left)
+
+    def maximum_recursive(self, node: Node) -> Node:
+        if node.right == None:
+            return node
+        else:
+            return self.maximum_recursive(node.right)
