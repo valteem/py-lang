@@ -97,6 +97,10 @@ def test_bst_right():
     assert next.parent.key ==1
     assert next.left == None
     assert next.key == 2
+    assert t.search(next, 1) == None
+    assert t.search(next, 2).key == 2
+    assert t.search(next, 3).key == 3
+    assert t.search(next, 4) == None
     assert t.search_iterative(next, 1) == None
     assert t.search_iterative(next, 2).key == 2
     assert t.search_iterative(next, 3).key == 3
