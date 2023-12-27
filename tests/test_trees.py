@@ -88,3 +88,33 @@ def test_bst_right():
     assert t.search(next, 2) == None
     assert t.search(next, 3).key == 3
     assert t.search(next, 4) == None
+
+def test_min_max():
+     
+    t = Tree()
+    t.insert(11)
+    t.insert(7)
+    t.insert(19)
+    t.insert(2)
+    t.insert(9)
+    t.insert(8)
+    t.insert(14)
+
+    assert t.maximum(t.root).key == 19
+    assert t.minimum(t.root).key == 2
+
+    n = t.root.left
+    assert t.maximum(n).key == 9
+    assert t.minimum(n).key == 2
+
+    n = t.root.left.left
+    assert t.maximum(n).key == 2
+    assert t.minimum(n).key == 2
+
+    n = t.root.left.right
+    assert t.maximum(n).key == 9
+    assert t.minimum(n).key == 8
+
+    n = t.root.right
+    assert t.maximum(n).key == 19
+    assert t.minimum(n).key == 14

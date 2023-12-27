@@ -69,3 +69,23 @@ class Tree:
             else:
                 current_node = current_node.left
         return current_node
+    
+
+    def minimum(self, node: Node) -> Node:
+        """
+        returns node with minimum key, not minimum key itself
+        """
+        current_node = node
+        while current_node.left != None:
+            current_node = current_node.left
+        return current_node
+    
+
+    def maximum(self, node: Node) -> Node:
+        """
+        returns node with maximum key, not maximum key itself
+        """
+        current_node = node
+        while current_node.right != None:
+            current_node = current_node.right
+        return current_node
