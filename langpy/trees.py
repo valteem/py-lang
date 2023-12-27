@@ -62,12 +62,14 @@ class Tree:
         --------
         https://stackoverflow.com/a/73504415 no 'comparable' type in Python, hence typing.Any for **key**
         """
+        if node == None or key == node.key:
+            return node
         current_node = node
         while current_node != None and key != current_node.key:
             if key < current_node.key:
-                current_node = current_node.right
-            else:
                 current_node = current_node.left
+            else:
+                current_node = current_node.right
         return current_node
     
 
