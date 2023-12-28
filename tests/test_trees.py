@@ -159,3 +159,28 @@ def test_min_max():
     assert t.maximum_recursive(n).key == 19
     assert t.minimum(n).key == 14
     assert t.minimum_recursive(n).key == 14
+
+
+def test_next():
+
+    t = Tree()
+    """
+    Figure 12.2 CLRS
+    """
+    t.insert(15)
+    t.insert(18)
+    t.insert(6)
+    t.insert(20)
+    t.insert(17)
+    t.insert(7)
+    t.insert(3)
+    t.insert(13)
+    t.insert(4)
+    t.insert(2)
+    t.insert(9)
+
+    assert t.next_node(t.search_iterative(t.root, 13)).key == 15
+    assert t.next_node(t.search_iterative(t.root, 9)).key == 13
+    assert t.next_node(t.search_iterative(t.root, 4)).key == 6
+    assert t.next_node(t.search_iterative(t.root, 17)).key == 18
+    assert t.next_node(t.search_iterative(t.root, 20)) == None

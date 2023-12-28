@@ -103,3 +103,19 @@ class Tree:
             return node
         else:
             return self.maximum_recursive(node.right)
+        
+    def next_node(self, node: Node) -> Node:
+        """
+        returns succesor node for a given tree node
+        """
+        if node.right != None:
+            return self.minimum(node.right)
+        parent_node = node.parent
+        right_node = node
+        while parent_node != None and right_node == parent_node.right:
+            """
+            second condition breaks traversal if **node** is left child of its parent
+            """ 
+            right_node = parent_node
+            parent_node = parent_node.parent
+        return parent_node
