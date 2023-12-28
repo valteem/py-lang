@@ -106,7 +106,7 @@ class Tree:
         
     def next_node(self, node: Node) -> Node:
         """
-        returns succesor node for a given tree node
+        returns succesor node for a given tree node, None if absent
         """
         if node.right != None:
             return self.minimum(node.right)
@@ -117,5 +117,18 @@ class Tree:
             second condition breaks traversal if **node** is left child of its parent
             """ 
             right_node = parent_node
+            parent_node = parent_node.parent
+        return parent_node
+    
+    def prev_node(self, node: Node) -> Node:
+        """
+        returns predecessor node for a given tree node, None if absent
+        """
+        if node.left != None:
+            return self.maximum(node.left)
+        parent_node = node.parent
+        left_node = node
+        while parent_node != None and left_node == parent_node.left:
+            left_node = parent_node
             parent_node = parent_node.parent
         return parent_node

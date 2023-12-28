@@ -2,6 +2,26 @@ from langpy.trees import Tree
 
 import pytest
 
+def tree_clrs_12_2() -> Tree:
+
+    t = Tree()
+    """
+    Figure 12.2 CLRS
+    """
+    t.insert(15)
+    t.insert(18)
+    t.insert(6)
+    t.insert(20)
+    t.insert(17)
+    t.insert(7)
+    t.insert(3)
+    t.insert(13)
+    t.insert(4)
+    t.insert(2)
+    t.insert(9)
+
+    return t
+
 def test_tree():
 
     t = Tree()
@@ -161,26 +181,20 @@ def test_min_max():
     assert t.minimum_recursive(n).key == 14
 
 
-def test_next():
+def test_next_prev():
 
-    t = Tree()
-    """
-    Figure 12.2 CLRS
-    """
-    t.insert(15)
-    t.insert(18)
-    t.insert(6)
-    t.insert(20)
-    t.insert(17)
-    t.insert(7)
-    t.insert(3)
-    t.insert(13)
-    t.insert(4)
-    t.insert(2)
-    t.insert(9)
+    t = tree_clrs_12_2()
 
     assert t.next_node(t.search_iterative(t.root, 13)).key == 15
     assert t.next_node(t.search_iterative(t.root, 9)).key == 13
     assert t.next_node(t.search_iterative(t.root, 4)).key == 6
     assert t.next_node(t.search_iterative(t.root, 17)).key == 18
+    assert t.next_node(t.search_iterative(t.root, 18)).key == 20
     assert t.next_node(t.search_iterative(t.root, 20)) == None
+
+    assert t.prev_node(t.search_iterative(t.root, 13)).key == 9
+    assert t.prev_node(t.search_iterative(t.root, 9)).key == 7
+    assert t.prev_node(t.search_iterative(t.root, 4)).key == 3
+    assert t.prev_node(t.search_iterative(t.root, 17)).key == 15
+    assert t.prev_node(t.search_iterative(t.root, 18)).key == 17
+    assert t.prev_node(t.search_iterative(t.root, 2)) == None
