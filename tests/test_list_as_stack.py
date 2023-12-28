@@ -12,4 +12,4 @@ def test_list_as_stack():
     for i in range(r):
         v = s.pop()
         assert v == r - i - 1
-        assert s == [x for x in range(r -i - 1)]
+        assert s == [x for x in range(r - i - 1)]
