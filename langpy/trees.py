@@ -4,6 +4,7 @@ Somewhat naive implemetation of tree data structure
 
 from __future__ import annotations
 from typing import Any
+from typing import List
 
 class Tree:
 
@@ -91,19 +92,22 @@ class Tree:
         while current_node.right != None:
             current_node = current_node.right
         return current_node
-    
+
+
     def minimum_recursive(self, node: Node) -> Node:
         if node.left == None:
             return node
         else:
             return self.minimum_recursive(node.left)
 
+
     def maximum_recursive(self, node: Node) -> Node:
         if node.right == None:
             return node
         else:
             return self.maximum_recursive(node.right)
-        
+
+
     def next_node(self, node: Node) -> Node:
         """
         returns succesor node for a given tree node, None if absent
@@ -119,7 +123,8 @@ class Tree:
             right_node = parent_node
             parent_node = parent_node.parent
         return parent_node
-    
+
+
     def prev_node(self, node: Node) -> Node:
         """
         returns predecessor node for a given tree node, None if absent
@@ -132,3 +137,23 @@ class Tree:
             left_node = parent_node
             parent_node = parent_node.parent
         return parent_node
+    
+
+    def inorder_walk(self, node: Node) -> List[Any]:
+        """
+        inorder walk implementation with stack (list)
+        """
+        current = node
+        stack = []
+        output = []
+        while True:
+            if current is not None:
+                stack.append(current)
+                current = current.left
+            elif stack:
+                current = stack.pop()
+                output.append(current.key)
+                current = current.right
+            else:
+                break
+        return output
