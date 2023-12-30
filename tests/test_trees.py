@@ -199,8 +199,48 @@ def test_next_prev():
     assert t.prev_node(t.search_iterative(t.root, 18)).key == 17
     assert t.prev_node(t.search_iterative(t.root, 2)) == None
 
+
 def test_inorder_walk():
 
     t = tree_clrs_12_2()
 
     assert t.inorder_walk(t.root) == [2, 3, 4, 6, 7, 9, 13, 15, 17, 18, 20]
+
+
+def test_delete():
+
+    t = tree_clrs_12_2()
+
+    t.delete(7)
+    assert t.inorder_walk(t.root) == [2, 3, 4, 6, 9, 13, 15, 17, 18, 20]
+
+    t.delete(15)
+    assert t.inorder_walk(t.root) == [2, 3, 4, 6, 9, 13, 17, 18, 20]
+
+    t.delete(3)
+    assert t.inorder_walk(t.root) == [2, 4, 6, 9, 13, 17, 18, 20]
+
+    t.delete(2)
+    assert t.inorder_walk(t.root) == [4, 6, 9, 13, 17, 18, 20]
+
+    t.delete(9)
+    assert t.inorder_walk(t.root) == [4, 6, 13, 17, 18, 20]
+
+    t.delete(18)
+    assert t.inorder_walk(t.root) == [4, 6, 13, 17, 20]
+
+    t.delete(20)
+    assert t.inorder_walk(t.root) == [4, 6, 13, 17]
+
+    t.delete(13)
+    assert t.inorder_walk(t.root) == [4, 6, 17]
+
+    t.delete(6)
+    assert t.inorder_walk(t.root) == [4, 17]
+
+    t.delete(4)
+    assert t.inorder_walk(t.root) == [17]
+
+    t.delete(17)
+    assert t.inorder_walk(t.root) == []
+

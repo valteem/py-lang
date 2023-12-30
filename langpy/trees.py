@@ -14,6 +14,11 @@ class Tree:
             self.parent = None
             self.left = None
             self.right = None
+        def is_leaf(self) -> bool:
+            if self.left is None and self.right is None:
+                return True
+            else:
+                return False
     
     def __init__(self, root = None) -> None:
         self.root = root
@@ -158,35 +163,63 @@ class Tree:
                 break
         return output
     
-    def delete(self, key) -> Node:
+    def replace_node(self, node_old: Node, node_new: Node) -> None:
+        """
+        Replaces node_old with node_new
+
+        Node node_old remains in a sense hanging
+
+        Any changes affecting node_new.left and node_new.right (if needed) are responsibility of replace_node() caller
+
+        This method is called multiple times within delete() method
+        """
+        if node_old.parent == None: # node_old is root node
+            self.root = node_new
+            if node_new is not None:
+                node_new.parent = None
+        else:
+            if node_old == node_old.parent.left : # node_old is left child of its parent
+                node_old.parent.left = node_new
+            else: # node_old is right child of it parent
+                node_old.parent.right = node_new
+            if node_new is not None:
+                node_new.parent = node_old.parent
+
+    
+    def delete(self, key) -> None:
         """
         We have three possible cases of how the node to be deleted is placed:
 
-        It is just a leaf:
-            All we need to do is to remove cross references between the node and it parent
-               parent_node.left(right) = None
-               deleted_node_parent = None
+            It is just a leaf:
+                All we need to do is to remove cross references between the node and it parent
 
-        It has only left (right) child:
-            We remove parent/child references of the deleted node, and connect left (right) child with the parent of deleted node:
-                parent_node.left(right) = deleted_node.left(right)
-                left_node(right_node).parent = parent_node
-                deleted_node.parent = None
-                deleted_node.left(right) = None
+            It has only left (right) child:
+                We remove parent/child references of the deleted node, and connect left (right) child with the parent of deleted node:
 
-        Its successor is its right child:
-            Replace deleted node with its right child:
-                
-        
-        Its successor is its right descendant:
-            Step 1. Replace successor with its right child
-            Step 2. Replace deleted node with its successor
-
-
-        
+            Its successor is its right child:
+                Replace deleted node with its right child:
+                                
+            Its successor is its right descendant:
+                Step 1. Replace successor with its right child (or remove successor if it is a leaf)
+                Step 2. Replace deleted node with its successor
         """        
         n = self.search_iterative(self.root, key)
         if  n == None:
-            return None # nothing to delete
+            return # nothing to delete
         
-        return None # just a placeholder for the logic to be implemented later
+        if n.left == None:
+            self.replace_node(n, n.right)
+        elif n.right == None:
+            self.replace_node(n, n.left)
+        else:
+            s = self.next_node(n)
+            if n != s.parent:
+                if s.is_leaf():
+                    s.parent.left = None
+                else:
+                    self.replace_node(s, s.right) # does not work if s is a leaf and has no right child
+                s.right = n.right
+                s.right.parent = s
+            self.replace_node(n, s)
+            s.left = n.left
+            s.left.parent = s
