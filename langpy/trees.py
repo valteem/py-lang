@@ -157,3 +157,36 @@ class Tree:
             else:
                 break
         return output
+    
+    def delete(self, key) -> Node:
+        """
+        We have three possible cases of how the node to be deleted is placed:
+
+        It is just a leaf:
+            All we need to do is to remove cross references between the node and it parent
+               parent_node.left(right) = None
+               deleted_node_parent = None
+
+        It has only left (right) child:
+            We remove parent/child references of the deleted node, and connect left (right) child with the parent of deleted node:
+                parent_node.left(right) = deleted_node.left(right)
+                left_node(right_node).parent = parent_node
+                deleted_node.parent = None
+                deleted_node.left(right) = None
+
+        Its successor is its right child:
+            Replace deleted node with its right child:
+                
+        
+        Its successor is its right descendant:
+            Step 1. Replace successor with its right child
+            Step 2. Replace deleted node with its successor
+
+
+        
+        """        
+        n = self.search_iterative(self.root, key)
+        if  n == None:
+            return None # nothing to delete
+        
+        return None # just a placeholder for the logic to be implemented later
