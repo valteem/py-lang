@@ -11,4 +11,6 @@ def test_radix_tree():
     r.insert("abcklm", 3)
     r.insert("abck", 4)
 
+    s = r.debug()
+
     assert r.root.key == ""

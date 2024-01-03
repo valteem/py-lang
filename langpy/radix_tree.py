@@ -148,3 +148,37 @@ class RadixTree():
             node.real = True
             node.value = value
             node.children.append(n)
+
+    def _debug_node(self, lst, level: int, node: RadixTreeNode) -> None:
+        """Recursive utility method to generate visual tree
+
+        Args:
+            lst: list of visual presentations for every node in tree
+            level: hierarchy level of depicted node
+            node: tree node to be included in visual presentation
+
+        Returns:
+            Nothing. All magic is about adding things to 'lst'
+        """
+
+        tmp = " " * level
+        tmp += "|"
+        tmp += "-" * level
+
+        if node.real:
+            tmp += "%s[%s]" % (node.key, node.value)
+        else:
+            tmp += "%s" % (node.key)
+
+        lst.append(tmp)
+
+        for child in node.children:
+            self._debug_node(lst, level + 1, child)
+    
+    def debug(self):
+        """Returns string representation of the tree
+        """
+
+        lst = []
+        self._debug_node(lst, 0, self.root)
+        return "\r".join(lst)
