@@ -2,6 +2,22 @@ import pytest
 
 from langpy.rbtree import RBTree, Node
 
+def test_node_reassign():
+    
+    np = Node(1, "v1")
+    nc = Node(2, "v2")
+    nc.parent = np
+    np.left = nc
+    nc = nc.parent
+
+    assert nc.value == "v1"
+    assert nc.left.value == "v2"
+    """
+    Left child still exists, but can now be referred to as 'np.left' only, not 'nc' anymore 
+    """
+    assert np.left.value == "v2"
+    assert np.left.key == 2
+
 def build_tree_left() -> RBTree:
     """
     Tree for testing left rotation:
@@ -160,3 +176,34 @@ def test_rotate_right():
     assert t.root.right.left.parent.key == 4
     assert t.root.right.left.left.key == "dummy"
     assert t.root.right.left.right.key == "dummy"
+
+def test_insert():
+    
+    t = RBTree()
+
+    t.insert(10)
+
+    assert t.root.red == False
+    assert id(t.root.parent) == id(t.root.left) and id(t.root.parent) == id(t.root.right) # parent, left and right refer to the same "dummy" element
+
+    t.insert(5)
+    t.insert(15)
+    assert t.root.left.red == True
+    assert t.root.right.red == True
+
+    t.insert(16)
+
+    assert t.root.left.red == False
+    assert t.root.right.red == False
+    assert t.root.right.right.red == True # when (16) is added both (5) and (15) are recolored as black
+
+    t.insert(17)
+
+    assert t.root.right.key == 16
+    assert t.root.right.red == False
+
+    assert t.root.right.left.key == 15
+    assert t.root.right.left.red == True
+
+    assert t.root.right.right.key == 17
+    assert t.root.right.right.red == True
