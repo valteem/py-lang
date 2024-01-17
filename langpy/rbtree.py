@@ -172,3 +172,16 @@ class RBTree():
             else:
                 ynode.right = node
         self.arrange_after_insert(node)
+
+    def replace_node(self, node_old: Node, node_new: Node) -> None:
+        if node_old.parent == self.dummy: # root node
+            self.root = node_new
+        else:
+            if node_old == node_old.parent.left:
+                node_old.parent.left = node_new
+            else:
+                node_old.parent.right = node_new
+        node_new.parent = node_old.parent
+        """
+        'node.new.left' and 'node_new.right' to be set by caller
+        """
