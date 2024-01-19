@@ -186,103 +186,153 @@ class RBTree():
         'node.new.left' and 'node_new.right' to be set by caller
         """
 
-        def minimum(self, node: Node) -> Node:
-            if node == self.dummy:
-                return None
-            while node.left != self.dummy:
-                node = node.left
-            return node
+    def minimum(self, node: Node) -> Node:
+        if node == self.dummy:
+            return None
+        while node.left != self.dummy:
+            node = node.left
+        return node
 
-        def arrange_after_delete(self, node: Node) -> None:
-            while node != self.root and node.red == False:
-                if node == node.parent.left:
-                    """
-                    Case A:
-                        - 'node' is left child of its parent
-                    """
-                    wnode = node.parent.right
-                    """
-                    Case A.1:
-                        - 'node' right sibling 'wnode' is red
-                    """
-                    if wnode.red == True:
-                        wnode.red = False # this ensures Case A.2 deals with black 'wnode' only
-                        node.parent.red = True
-                        self.rotate_left(node.parent)
-                        wnode = node.parent.right # former node.parent.right.left
-                    """
-                    Case A.2:
-                        - 'node' right sibling 'wnode' is black (output of Case A.1 provides for that)
-                        - both 'wnode' children are black
-                    """
-                    if wnode.left.red == False and wnode.right.red == False:
-                        wnode.red = True
-                        node = node.parent
-                    else:
-                        """
-                        Case A.3:
-                            - 'node' right sibling 'wnode' is black
-                            - 'wnode' left child is red
-                            - 'wnode' right child is black
-                        """
-                        if wnode.right.red == False:
-                            wnode.left.red = False
-                            wnode.red = True
-                            self.rotate_right(wnode)
-                            wnode = node.parent.right
-                        """
-                        Case A.4:
-                            - 'node' right sibling 'wnode' is black
-                            - 'wnode' right child is red
-                        """
-                        wnode.red = node.parent.red
-                        node.parent.red = False
-                        wnode.right.red = False
-                        self.rotate_left(node.parent)
-                        self.root = node
+    def arrange_after_delete(self, node: Node) -> None:
+        while node != self.root and node.red == False:
+            if node == node.parent.left:
+                """
+                Case A:
+                    - 'node' is left child of its parent
+                """
+                wnode = node.parent.right
+                """
+                Case A.1:
+                    - 'node' right sibling 'wnode' is red
+                """
+                if wnode.red == True:
+                    wnode.red = False # this ensures Case A.2 deals with black 'wnode' only
+                    node.parent.red = True
+                    self.rotate_left(node.parent)
+                    wnode = node.parent.right # former node.parent.right.left
+                """
+                Case A.2:
+                    - 'node' right sibling 'wnode' is black (output of Case A.1 provides for that)
+                    - both 'wnode' children are black
+                """
+                if wnode.left.red == False and wnode.right.red == False:
+                    wnode.red = True
+                    node = node.parent
                 else:
                     """
-                    Case B:
-                        - 'node' is right child of it parent
+                    Case A.3:
+                        - 'node' right sibling 'wnode' is black
+                        - 'wnode' left child is red
+                        - 'wnode' right child is black
                     """
+                    if wnode.right.red == False:
+                        wnode.left.red = False
+                        wnode.red = True
+                        self.rotate_right(wnode)
+                        wnode = node.parent.right
+                    """
+                    Case A.4:
+                        - 'node' right sibling 'wnode' is black
+                        - 'wnode' right child is red
+                    """
+                    wnode.red = node.parent.red
+                    node.parent.red = False
+                    wnode.right.red = False
+                    self.rotate_left(node.parent)
+                    self.root = node
+            else:
+                """
+                Case B:
+                    - 'node' is right child of it parent
+                """
+                wnode = node.parent.left
+                """
+                Case B.1:
+                    - 'node' left sibling 'wnode' is red
+                """
+                if wnode.red == True:
+                    wnode.red = False # this ensures Case B.2 deals with black 'wnode' only
+                    node.parent.red = True
+                    self.rotate_right(node.parent)
                     wnode = node.parent.left
+                """
+                Case B.2:
+                    - 'node' left sibling 'wnode' is black (output of Case B.1 provides for that)
+                    - both 'wnode' children are black
+                """
+                if wnode.left.red == False and wnode.right.red == False:
+                    wnode.red = True
+                    node = node.parent
+                else:
                     """
-                    Case B.1:
-                        - 'node' left sibling 'wnode' is red
+                    Case B.3:
+                        - 'node' left sibling 'wnode' is black
+                        - 'wnode' right child is red
+                        - 'wnode' left child is black
                     """
-                    if wnode.red == True:
-                        wnode.red = False # this ensures Case B.2 deals with black 'wnode' only
-                        node.parent.red = True
-                        self.rotate_right(node.parent)
+                    if wnode.left.red == False:
+                        wnode.right.red = False
+                        wnode.red = True
+                        self.rotate_left(wnode)
                         wnode = node.parent.left
                     """
-                    Case B.2:
-                        - 'node' left sibling 'wnode' is black (output of Case B.1 provides for that)
-                        - both 'wnode' children are black
+                    Case B.4:
+                        - 'node' left sibling 'wnode' is black
+                        - 'wnode' left child is red
                     """
-                    if wnode.left.red == False and wnode.right.red == False:
-                        wnode.red = True
-                        node = node.parent
-                    else:
-                        """
-                        Case B.3:
-                            - 'node' left sibling 'wnode' is black
-                            - 'wnode' right child is red
-                            - 'wnode' left child is black
-                        """
-                        if wnode.left.red == False:
-                            wnode.right.red = False
-                            wnode.red = True
-                            self.rotate_left(wnode)
-                            wnode = node.parent.left
-                        """
-                        Case B.4:
-                            - 'node' left sibling 'wnode' is black
-                            - 'wnode' left child is red
-                        """
-                        wnode.red = node.parent.red
-                        node.parent.red = False
-                        wnode.left.red = False
-                        self.rotate_right(node.parent)
-                        self.root = node
-            node.red = False 
+                    wnode.red = node.parent.red
+                    node.parent.red = False
+                    wnode.left.red = False
+                    self.rotate_right(node.parent)
+                    self.root = node
+        node.red = False
+    
+    def replace_node(self, old: Node, new: Node) -> None:
+        if old.parent == self.dummy:
+            self.root = new
+        elif old == old.parent.left:
+            old.parent.left = new
+        else:
+            old.parent.right = new
+        new.parent = old.parent
+
+    def delete_node(self, node: Node) -> None:
+        original_red = node.red
+        if node.left == self.dummy:
+            xnode = node.right # node to be passed to arrange_after_delete()
+            self.replace_node(node, xnode)
+        elif node.right == self.dummy:
+            xnode = node.left
+            self.replace(node, xnode)
+        else: # both left and right child of deleted node are not dummies
+            mnode = self.minimum(node.right)
+            original_red = mnode.red
+            xnode = mnode.right
+            if mnode.parent == node:
+                xnode.parent = mnode
+            else:
+                self.replace_node(mnode, mnode.right)
+                mnode.right = node.right
+                mnode.right.parent = mnode
+            self.replace_node(node, mnode)
+            mnode.left = node.left
+            mnode.left.parent = mnode
+            mnode.red = node.red
+        if original_red == False:
+            self.arrange_after_delete(xnode)
+
+    def search(self, node: Node, key) -> [Node, None]:
+        if node == self.dummy:
+            return None
+        elif key == node.key:
+            return node
+        else:
+            if key < node.key:
+                return self.search(node.left, key)
+            else:
+                return self.search(node.right, key)
+            
+    def delete_key(self, key) -> None:
+        n = self.search(self.root, key)
+        if n is not None:
+            self.delete_node(n)

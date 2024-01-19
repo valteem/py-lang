@@ -195,7 +195,7 @@ def test_insert():
 
     assert t.root.left.red == False
     assert t.root.right.red == False
-    assert t.root.right.right.red == True # when (16) is added both (5) and (15) are recolored as black
+    assert t.root.right.right.red == True # when (16) is inserted both (5) and (15) are recolored as black
 
     t.insert(17)
 
@@ -207,3 +207,39 @@ def test_insert():
 
     assert t.root.right.right.key == 17
     assert t.root.right.right.red == True
+
+def test_delete():
+
+    t = RBTree()
+
+    t.insert(10)
+    t.insert(5)
+    t.insert(15)
+    t.insert(16)
+    t.insert(17)
+
+    t.delete_key(10)
+    assert t.root.key == 15
+    assert t.root.red == False
+    assert t.root.left.key == 5
+    assert t.root.left.red == False
+    assert t.root.right.key == 16
+    assert t.root.right.red == False
+    assert t.root.right.right.key == 17
+    assert t.root.right.right.red == True
+
+    t.delete_key(15)
+    assert t.root.key == 16
+    assert t.root.red == False
+    assert t.root.left.key == 5
+    assert t.root.left.red == False
+    assert t.root.right.key == 17
+    assert t.root.right.red == False
+
+    t.delete_key(18) # attempt to delete non-existing node does not change a tree and it nodes
+    assert t.root.key == 16
+    assert t.root.red == False
+    assert t.root.left.key == 5
+    assert t.root.left.red == False
+    assert t.root.right.key == 17
+    assert t.root.right.red == False
