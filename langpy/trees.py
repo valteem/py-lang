@@ -7,8 +7,9 @@ from typing import Any
 from typing import List
 
 class Node:
-    def __init__(self, key) -> None:
+    def __init__(self, key, value = None) -> None:
         self.key = key
+        self.value = value
         self.parent = None
         self.left = None
         self.right = None

@@ -1,22 +1,17 @@
 from __future__ import annotations
 
-from langpy.trees import Tree
+from langpy.trees import Node as BaseNode, Tree
 
 """
 CLRS based implementation of red-black tree
 """
 
-class Node():
+class Node(BaseNode):
     def __init__(self, key, value = None, red: bool = True) -> None:
-        self.key = key
-        self.value = value
+        super().__init__(key, value)
         self.red = red
-        self.parent = None
-        self.left = None
-        self.right = None
 
-
-class RBTree():
+class RBTree(Tree):
     """
     Red-black tree
 
