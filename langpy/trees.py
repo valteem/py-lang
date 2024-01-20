@@ -6,19 +6,19 @@ from __future__ import annotations
 from typing import Any
 from typing import List
 
-class Tree:
+class Node:
+    def __init__(self, key) -> None:
+        self.key = key
+        self.parent = None
+        self.left = None
+        self.right = None
+    def is_leaf(self) -> bool:
+        if self.left is None and self.right is None:
+            return True
+        else:
+            return False
 
-    class Node:
-        def __init__(self, key) -> None:
-            self.key = key
-            self.parent = None
-            self.left = None
-            self.right = None
-        def is_leaf(self) -> bool:
-            if self.left is None and self.right is None:
-                return True
-            else:
-                return False
+class Tree:
     
     def __init__(self, root = None) -> None:
         self.root = root
@@ -30,7 +30,7 @@ class Tree:
 #        if self.search(self.root, key) != None:
         if self.search_iterative(self.root, key) != None:
             return # nothing to add if the key already exists
-        n = Tree.Node(key)
+        n = Node(key)
         parent_node = None
         current_node = self.root # start looking for appropriate place to insert new node from root node
         while current_node != None:
