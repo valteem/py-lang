@@ -31,7 +31,7 @@ class RBTree(Tree):
                       /         \                    /          /         \
                     beta      gamma                 /        alpha       beta
         """
-        ynode = xnode.right
+        ynode: Node = xnode.right
         xnode.right = ynode.left       # beta
         if ynode.left != self.dummy:
             ynode.left.parent = xnode
@@ -55,7 +55,7 @@ class RBTree(Tree):
                /         \                             /                  /         \
             alpha       beta                          /                beta       gamma
         """
-        xnode = ynode.left
+        xnode: Node = ynode.left
         ynode.left = xnode.right       # beta
         if xnode.right != self.dummy:
             xnode.right.parent = ynode
@@ -84,7 +84,7 @@ class RBTree(Tree):
                          /                                                        \
                       rnode                                                      rnode
                 """
-                ynode = rnode.parent.parent.right
+                ynode: Node = rnode.parent.parent.right
                 if ynode.red:
                     # recolor parent node and 'uncle node' to black, grandparent to red 
                     ynode.red = False
@@ -148,10 +148,10 @@ class RBTree(Tree):
 
         TODO: add check if key added is already in the tree
         """
-        node = Node(key, value) # new node for any unique key
+        node: Node = Node(key, value) # new node for any unique key
         node.left, node.right = self.dummy, self.dummy
-        ynode = self.dummy
-        xnode = self.root
+        ynode: Node = self.dummy
+        xnode: Node = self.root
         while xnode != self.dummy:
             ynode = xnode
             if key < xnode.key:
@@ -195,7 +195,7 @@ class RBTree(Tree):
                 Case A:
                     - 'node' is left child of its parent
                 """
-                wnode = node.parent.right
+                wnode: Node = node.parent.right
                 """
                 Case A.1:
                     - 'node' right sibling 'wnode' is red
@@ -292,15 +292,15 @@ class RBTree(Tree):
         new.parent = old.parent
 
     def delete_node(self, node: Node) -> None:
-        original_red = node.red
+        original_red: bool = node.red
         if node.left == self.dummy:
-            xnode = node.right # node to be passed to arrange_after_delete()
+            xnode: Node = node.right # node to be passed to arrange_after_delete()
             self.replace_node(node, xnode)
         elif node.right == self.dummy:
             xnode = node.left
             self.replace(node, xnode)
         else: # both left and right child of deleted node are not dummies
-            mnode = self.minimum(node.right)
+            mnode: Node = self.minimum(node.right)
             original_red = mnode.red
             xnode = mnode.right
             if mnode.parent == node:
@@ -328,6 +328,6 @@ class RBTree(Tree):
                 return self.search(node.right, key)
             
     def delete_key(self, key) -> None:
-        n = self.search(self.root, key)
+        n: Node = self.search(self.root, key)
         if n is not None:
             self.delete_node(n)
