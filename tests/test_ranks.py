@@ -9,6 +9,6 @@ def test_round_grades():
     rounded_grades = round_grades(test_grades)
     assert rounded_grades == [75, 67, 40, 33]
 
-def test_convert_str_to_list_of_int():
+def test_str_to_list_of_int():
     assert convert_str_to_list_of_int("11 21 31 41\n") == [11, 21, 31, 41]
     assert convert_str_to_list_of_int("11 21 31 41 a\n") == []
