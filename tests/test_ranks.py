@@ -18,3 +18,7 @@ def test_int_to_bytes():
     
     assert int_to_bytes(258, 'big') == b'\x01\x02'
     assert int_to_bytes(258, 'little') == b'\x02\x01'
+
+    assert [x for x in int_to_bytes(65535, 'big')] == [255, 255]
+    assert [x for x in int_to_bytes(65536, 'big')] == [1, 0, 0]
+    assert [x for x in int_to_bytes(65536, 'little')] == [0, 0, 1]
