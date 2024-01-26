@@ -1,3 +1,5 @@
+from typing import Literal
+
 def round_grades(grades):
     rounded = []
     for x in grades:
@@ -21,4 +23,6 @@ def str_to_list_of_int(s: str) -> list[int]:
         return list(map(int, s.rstrip().split()))
     else:
         return []
-    
+
+def int_to_bytes(i: int, byteorder: Literal['big', 'little']) -> bytes:
+    return i.to_bytes((i.bit_length() + 7)//8, byteorder)    
