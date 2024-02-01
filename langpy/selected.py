@@ -19,3 +19,17 @@ class EnumVal(IntEnum):
 SEL_1 = EnumVal.SEL_1
 SEL_2 = EnumVal.SEL_2
 SEL_3 = EnumVal.SEL_3
+
+
+import json
+
+def key_encode(key: int) -> str:
+    return json.dumps(key)
+
+from typing import Dict
+
+def dict_encode(dict: Dict[int, str]):
+    return json.dumps(dict)
+
+def value_serializer(value: float) -> str:
+    return json.dumps(value)
