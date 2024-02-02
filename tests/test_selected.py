@@ -37,3 +37,22 @@ def test_product():
     assert p2.amout() == 12.8
     assert p1 != p2
 
+from langpy.selected import Encoder
+
+def test_encoder():
+    e1 = Encoder()
+    e1.set_src('csv')
+    e1.set_dst('xml')
+    assert e1.convert("text") == "csv_to_xml text"
+    e2 = Encoder()
+    e2.set_src('json')
+    e2.set_dst('xml')
+    assert e2.convert("text") == "json_to_xml text"
+    e3 = Encoder()
+    e3.set_src('xml')
+    e3.set_dst('csv')
+    assert e3.convert("text") == "no available encode path"
+    """
+    Fails, 'src' and 'dst are shared among e1, e2, e3
+    """
+#    assert e1.convert("text") == "csv_to_xml text"

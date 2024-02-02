@@ -46,3 +46,25 @@ class Product:
 
     def amout(self) -> float:
         return self.price * float(self.qty)
+    
+
+class Encoder:
+    src: str
+    dst: str
+    @classmethod
+    def set_src(cls, src: str) -> None:
+        cls.src = src
+    @classmethod
+    def set_dst(cls, dst: str) -> None:
+        cls.dst = dst
+    def convert(self, inp: str) -> str:
+        pair = self.src + "_" + self.dst
+        match pair:
+            case "csv_xml":
+                return "csv_to_xml" + " " + inp
+            case "csv_json":
+                return "csv_to_json" + " " + inp
+            case "json_xml":
+                return "json_to_xml" + " " + inp
+            case _:
+                return "no available encode path"
