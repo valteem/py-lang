@@ -33,3 +33,16 @@ def dict_encode(dict: Dict[int, str]):
 
 def value_serializer(value: float) -> str:
     return json.dumps(value)
+
+
+from dataclasses import dataclass, field
+from typing import List
+
+@dataclass
+class Product:
+    price: float
+    qty: int
+    places: List[str] = field(default_factory=lambda: ['main', 'reserve', 'external'])
+
+    def amout(self) -> float:
+        return self.price * float(self.qty)

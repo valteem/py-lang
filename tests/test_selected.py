@@ -27,3 +27,13 @@ def test_encode():
     assert dict_encode({1: "old", 11: "new"}) == '{"1": "old", "11": "new"}'
     assert value_serializer(1.1E+1) == "11.0"
 
+from langpy.selected import Product
+
+def test_product():
+    p1 = Product(1.0, 10) # 'hidden' __init__() produced by 'dataclass' decorator
+    assert p1.amout() == 10.0
+    assert p1.places == ['main', 'reserve', 'external']
+    p2 = Product(3.2, 4)
+    assert p2.amout() == 12.8
+    assert p1 != p2
+
