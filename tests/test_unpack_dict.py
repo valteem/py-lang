@@ -1,12 +1,14 @@
 import pytest
 
-def test_unpack_dict_to_string():
+def unpack_dict_to_string(template: str, input: dict ) -> str:
+    return template % input
 
-    template = '%(x)d/%(y)d/%(z)d'
+@pytest.mark.parametrize("template, input, output",
+                         [('%(x)d/%(y)d/%(z)d', {'x': 1, 'y': 2, 'z': 3}, '1/2/3'),
+                          ('%(z)d/%(x)d/%(y)d', {'x': 1, 'y': 2, 'z': 3}, '3/1/2')])
+def test_unpack_dict_to_string(template, input, output):
 
-    output = template % {'x': 1, 'y': 2, 'z': 3}
-
-    assert output == '1/2/3'
+    assert unpack_dict_to_string(template, input) == output
 
 
 # https://stackoverflow.com/a/7527889
