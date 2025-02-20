@@ -5,6 +5,7 @@ Somewhat naive implemetation of tree data structure
 from __future__ import annotations
 from typing import Any
 from typing import List
+from typing import Union
 
 class Node:
     def __init__(self, key, value = None) -> None:
@@ -49,7 +50,7 @@ class Tree:
             parent_node.right = n
 
     
-    def search(self, node: Node, key: Any) -> [Node, None]:
+    def search(self, node: Node, key: Any) -> Union[Node, None]:
         """
         recursive search
         """
@@ -63,7 +64,7 @@ class Tree:
                 return self.search(node.right, key)
             
     
-    def search_iterative(self, node: Node, key: Any) -> [Node, None]:
+    def search_iterative(self, node: Node, key: Any) -> Union[Node, None]:
         """
         iterative search
         --------
