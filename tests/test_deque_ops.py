@@ -23,3 +23,12 @@ def test_basic():
 
     d.extend([21, 22])
     assert [*d] == [12, 11, 4, 5, 1, 2, 3, 21, 22]
+
+def test_pop():
+
+    q = deque(['a', 'b', 'c'])
+
+    q.append('x')
+
+    q.pop() == 'x'
+    assert q.popleft() == 'a'
