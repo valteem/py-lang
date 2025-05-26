@@ -320,7 +320,7 @@ class RBTree(Tree):
         if original_red == False:
             self.arrange_after_delete(xnode)
 
-    def search(self, node: Node, key) -> [Node, None]:
+    def search(self, node: Node, key) -> Union[Node, None]:
         if node == self.dummy:
             return None
         elif key == node.key:
