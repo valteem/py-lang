@@ -1,3 +1,7 @@
+# Consider using BigTree or AnyTree to avoid type checking issues
+
+from typing import Union
+
 from __future__ import annotations
 
 from langpy.trees import Node as BaseNode, Tree
@@ -31,7 +35,7 @@ class RBTree(Tree):
                       /         \                    /          /         \
                     beta      gamma                 /        alpha       beta
         """
-        ynode: Node = xnode.right
+        ynode = xnode.right
         xnode.right = ynode.left       # beta
         if ynode.left != self.dummy:
             ynode.left.parent = xnode
