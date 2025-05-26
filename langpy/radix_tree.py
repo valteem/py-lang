@@ -19,7 +19,7 @@ class RadixTreeNode():
     """
     def __init__(self) -> None:
         self.key = ""
-        self.children = [] # child nodes stored in a list
+        self.children: list[RadixTreeNode] = [] # child nodes stored in a list
         self.real = False  # (?) string termination flag
         self.value = None  # (?)
 
