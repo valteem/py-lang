@@ -11,9 +11,9 @@ class Node:
     def __init__(self, key, value = None) -> None:
         self.key = key
         self.value = value
-        self.parent = None
-        self.left = None
-        self.right = None
+        self.parent: Union[Node, None] = None
+        self.left: Union[Node, None] = None
+        self.right: Union[Node, None] = None
     def is_leaf(self) -> bool:
         if self.left is None and self.right is None:
             return True
@@ -50,7 +50,7 @@ class Tree:
             parent_node.right = n
 
     
-    def search(self, node: Node, key: Any) -> Union[Node, None]:
+    def search(self, node: Union[Node, None], key: Any) -> Union[Node, None]:
         """
         recursive search
         """
@@ -64,7 +64,7 @@ class Tree:
                 return self.search(node.right, key)
             
     
-    def search_iterative(self, node: Node, key: Any) -> Union[Node, None]:
+    def search_iterative(self, node: Union[Node, None], key: Any) -> Union[Node, None]:
         """
         iterative search
         --------
@@ -72,7 +72,7 @@ class Tree:
         """
         if node == None or key == node.key:
             return node
-        current_node = node
+        current_node: Union[Node, None] = node
         while current_node != None and key != current_node.key:
             if key < current_node.key:
                 current_node = current_node.left
@@ -115,7 +115,7 @@ class Tree:
             return self.maximum_recursive(node.right)
 
 
-    def next_node(self, node: Node) -> Node:
+    def next_node(self, node: Node) -> Union[Node, None]:
         """
         returns succesor node for a given tree node, None if absent
         """
@@ -132,7 +132,7 @@ class Tree:
         return parent_node
 
 
-    def prev_node(self, node: Node) -> Node:
+    def prev_node(self, node: Node) -> Union[Node, None]:
         """
         returns predecessor node for a given tree node, None if absent
         """
@@ -150,9 +150,9 @@ class Tree:
         """
         inorder walk implementation with stack (list)
         """
-        current = node
+        current: Union[Node, None] = node
         stack = []
-        output = []
+        output: list[Node] = []
         while True:
             if current is not None:
                 stack.append(current)
@@ -165,7 +165,7 @@ class Tree:
                 break
         return output
     
-    def replace_node(self, node_old: Node, node_new: Node) -> None:
+    def replace_node(self, node_old: Node, node_new: Union[Node, None]) -> None:
         """
         Replaces node_old with node_new
 
@@ -215,7 +215,11 @@ class Tree:
             self.replace_node(n, n.left)
         else:
             s = self.next_node(n)
+            if s is None:
+                raise RuntimeError("next node cannot be None")
             if n != s.parent:
+                if s.parent is None:
+                    raise RuntimeError("next parent node cannot be None")
                 if s.is_leaf():
                     s.parent.left = None
                 else:
