@@ -1,4 +1,4 @@
-from langpy.instance_attr_ref import Node, ListCont, ListContInit
+from langpy.instance_attr_ref import Node, ListCont, ListContInit, A
 
 def test_instance_attr_ref():
 
@@ -22,3 +22,11 @@ def test_instance_attr_ref():
     lci1.list.append(1)   # since 'inp' and lci1.list refer to the same object in memory, inp also changes to [1]
     lci2 = ListContInit() # inp = [1] is an input variable while constructing 'lci2'
     assert lci2.list == [1] # magic
+
+def test_instance_attr_ouside_init():
+
+    a = A(1)
+    a.assign(2)
+
+    assert a.attr1 == 1
+    assert a.attr2 == 2
